@@ -25,4 +25,5 @@ It downloads algorithm infos from HiveOS Repo
 8-) When you click upload tar.gz file button, program will upload miner package to my public ftp server then you can add link to hiveos flight sheet
 ----- It will show you some parameters for filling hiveos custom miner settings use them
 
+
 [s]Youtube How TO https://www.youtube.com/watch?v=7y6iJHFmyV0&feature=youtu.be[/s] new video will be upload
