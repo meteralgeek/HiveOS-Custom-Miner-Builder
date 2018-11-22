@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiveOSPacker", "HiveOSPacker\HiveOSPacker.csproj", "{B34B596C-DF9C-4AF7-BD1F-ADF609D3443B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B34B596C-DF9C-4AF7-BD1F-ADF609D3443B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B34B596C-DF9C-4AF7-BD1F-ADF609D3443B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B34B596C-DF9C-4AF7-BD1F-ADF609D3443B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B34B596C-DF9C-4AF7-BD1F-ADF609D3443B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9FF2588-CE5C-4029-A92A-676DB5B9FA1B}
+	EndGlobalSection
+EndGlobal
