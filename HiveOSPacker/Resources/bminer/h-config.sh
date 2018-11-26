@@ -2,9 +2,9 @@
 
 [ -t 1 ] && . colors
 
-log=/hive/custom/bminer/test.log
+log=/hive/miners/custom/changeminername/test.log
 
-. /hive/custom/bminer/h-manifest.conf
+. /hive/miners/custom/changeminername/h-manifest.conf
 [[ -z $CUSTOM_URL ]] && echo -e "${YELLOW}BMINER_URL is empty, skipping config generation${NOCOLOR}" && return 1
 [[ -z $CUSTOM_TEMPLATE ]] && echo -e "${YELLOW}BMINER_TEMPLATE is empty, skipping config generation${NOCOLOR}" && return 1
 conf="-api ${WEB_HOST}:${WEB_PORT} -max-temperature 82"

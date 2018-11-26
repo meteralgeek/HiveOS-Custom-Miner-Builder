@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. /hive/custom/changeminername/h-manifest.conf
+. /hive/miners/custom/changeminername/h-manifest.conf
 
 stats_raw=`curl --connect-timeout 2 --max-time $API_TIMEOUT --silent --noproxy '*' http://127.0.0.1:${CUSTOM_API_PORT}`
 
