@@ -2,13 +2,15 @@
 
 Hive OS Config Builder and tar.gz Packer For Custom Miners
 
+* New Changed /hive/custom/$CUSTOM_MINER paths to /hive/miner/custom/$CUSTOM_MINER due to last HiveOS Update.
+
 * Config Builder For AMD and Nvidia miners
 
-* .tar.gz Packer For Custom Miners
+* HiveOS .tar.gz Packer For Linux Miners
 
-*New .tar.gz miner package upload to Public FTP Server
+* .tar.gz miner package upload to Public FTP Server
 
-*New Global Miner (You Can Build HiveOS Custom Miner Package for any Linux Miner)
+* Global Miner (You Can Build HiveOS Custom Miner Package for any Linux Miner)
 
 It downloads algorithm infos from HiveOS Repo
 
