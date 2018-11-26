@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,6 +30,7 @@ namespace HiveOSPacker
         string savedirectory;
         string savefilename;
         string minerconf = "";
+       
         string minername = "";
         string algo = "";
 
@@ -42,7 +43,7 @@ namespace HiveOSPacker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            AfterLoading();
+            
 
 
             comboBox3.Items.Add("energiminer solo");
@@ -62,14 +63,6 @@ namespace HiveOSPacker
             comboBox3.Items.Add("other miners");
 
 
-
-
-
-
-        }
-
-        void Form1_Shown(object sender, EventArgs e)
-        {
             Application.DoEvents();
 
             comboBox1.Text = "Select Algorithm";
@@ -97,32 +90,23 @@ namespace HiveOSPacker
                 catch { continue; }
             }
 
-           
+
             textBox9.Text = "";
-           
+
+
+
         }
 
-
-
-
-        private void AfterLoading()
+        void Form1_Shown(object sender, EventArgs e)
         {
-
-            progressBar1.Value = 20;
-            System.Threading.Thread.Sleep(1000);
-
-            progressBar1.Value = 40;
-            System.Threading.Thread.Sleep(1000);
-            progressBar1.Value = 60;
-            System.Threading.Thread.Sleep(1000);
-
-            progressBar1.Value = 100;
-
-            
+            Application.DoEvents();
 
         }
 
-  
+
+
+
+        
 
         public void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -146,19 +130,28 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
                 {
-
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\wildrig-multi\\h-config.sh", @textBox10.Text + "\\" + minername + "\\h-config.sh");
                 }
@@ -166,26 +159,32 @@ namespace HiveOSPacker
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\wildrig-multi\\h-manifest.conf", @textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    string text = File.ReadAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    text = text.Replace("changeminername", minername);
-                    File.WriteAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf", text);
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-run.sh"))
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\wildrig-multi\\h-run.sh", @textBox10.Text + "\\" + minername + "\\h-run.sh");
-                    string text = File.ReadAllText(@textBox10.Text + "\\" + minername + "\\h-run.sh");
-                    text = text.Replace("changeminername", minername);
-                    File.WriteAllText(@textBox10.Text + "\\" + minername + "\\h-run.sh", text);
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-stats.sh"))
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\wildrig-multi\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
-                    string text = File.ReadAllText(@textBox10.Text + "\\" + minername + "\\h-stats.sh");
-                    text = text.Replace("changeminername", minername);
-                    File.WriteAllText(@textBox10.Text + "\\" + minername + "\\h-stats.sh", text);
                 }
+
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
+
+
+
 
             }
 
@@ -199,14 +198,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -219,9 +228,6 @@ namespace HiveOSPacker
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\sgminer\\h-manifest.conf", @textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    string text = File.ReadAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    text = text.Replace("changeminername", minername);
-                    File.WriteAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf", text);
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-run.sh"))
                 {
@@ -234,7 +240,17 @@ namespace HiveOSPacker
                     File.Copy(@"Resources\\sgminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
 
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
 
 
 
@@ -250,14 +266,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -280,7 +306,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\energiminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
 
 
 
@@ -301,14 +337,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -332,7 +378,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\energiminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
 
 
 
@@ -348,14 +404,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -379,7 +445,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\cryptodredge\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
             //bminer
             if (comboBox3.SelectedItem.ToString() == "bminer")
@@ -391,19 +467,27 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
-
+                }
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
                 {
-
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\bminer\\h-config.sh", @textBox10.Text + "\\" + minername + "\\h-config.sh");
                 }
@@ -422,6 +506,19 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\bminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
+
+
 
             }
             //finminer
@@ -434,14 +531,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -465,7 +572,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\finminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
             //zjazz
@@ -478,37 +595,61 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",SearchOption.AllDirectories))
+                    {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                    }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*",SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
+                                
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
                 {
 
-                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername);
                     File.Copy(@"Resources\\zjazz\\h-config.sh", @textBox10.Text + "\\" + minername + "\\h-config.sh");
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-manifest.conf"))
                 {
-                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername);
                     File.Copy(@"Resources\\zjazz\\h-manifest.conf", @textBox10.Text + "\\" + minername + "\\h-manifest.conf");
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-run.sh"))
                 {
-                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername);
                     File.Copy(@"Resources\\zjazz\\h-run.sh", @textBox10.Text + "\\" + minername + "\\h-run.sh");
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-stats.sh"))
                 {
-                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername);
                     File.Copy(@"Resources\\zjazz\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
+
+
 
             }
             //geekminercuda
@@ -519,16 +660,25 @@ namespace HiveOSPacker
                     File.Move(@textBox10.Text + "\\" + minername, @textBox10.Text + "\\" + minername + "1");
                 }
 
-
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -552,7 +702,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\geekminercuda\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
             //global
@@ -565,14 +725,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -585,9 +755,6 @@ namespace HiveOSPacker
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\global\\h-manifest.conf", @textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    string text = File.ReadAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf");
-                    text = text.Replace("changeminername", minername);
-                    File.WriteAllText(@textBox10.Text + "\\" + minername + "\\h-manifest.conf", text);
                 }
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-run.sh"))
                 {
@@ -599,7 +766,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\global\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
             //sgminergeek
             if (comboBox3.SelectedItem.ToString() == "sgminergeek")
@@ -611,14 +788,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -642,7 +829,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\sgminergeek\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
             //t-rex
@@ -655,14 +852,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -671,6 +878,7 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\t-rex\\h-config.sh", @textBox10.Text + "\\" + minername + "\\h-config.sh");
                 }
+                
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-manifest.conf"))
                 {
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
@@ -686,7 +894,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\t-rex\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-    
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
 
 
 
@@ -702,14 +920,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -733,7 +961,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\teamredminer\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
             //xmrig-amd
@@ -746,14 +984,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -777,7 +1025,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\xmrig-amd\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
             //xmrig-nvidia
@@ -790,14 +1048,24 @@ namespace HiveOSPacker
 
 
                 //Now Create all of the directories
-                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*",
-                    SearchOption.AllDirectories))
+
+
+                foreach (string dirPath in Directory.GetDirectories(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     Directory.CreateDirectory(dirPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"));
+                }
+
+                if (!Directory.Exists(@textBox10.Text + "\\" + minername + "\\"))
+                {
+
+                    Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
+                }
 
                 //Copy all the files & Replaces any files with the same name
-                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*.*",
-                    SearchOption.AllDirectories))
+                foreach (string newPath in Directory.GetFiles(@textBox10.Text, "*", SearchOption.AllDirectories))
+                {
                     File.Copy(newPath, newPath.Replace(@textBox10.Text, @textBox10.Text + "\\" + minername + "\\"), true);
+                }
 
 
                 if (!File.Exists(@textBox10.Text + "\\" + minername + "\\h-config.sh"))
@@ -821,7 +1089,17 @@ namespace HiveOSPacker
                     Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\");
                     File.Copy(@"Resources\\xmrig-nvidia\\h-stats.sh", @textBox10.Text + "\\" + minername + "\\h-stats.sh");
                 }
-
+                foreach (string file in Directory.GetFiles(@textBox10.Text + "\\" + minername + "\\", "*", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        
+                        string text = File.ReadAllText(file);
+                        text = text.Replace("changeminername", minername);
+                        File.WriteAllText(file, text);
+                    }
+                    catch { }
+                }
             }
 
 
@@ -854,7 +1132,7 @@ namespace HiveOSPacker
 
 
             ////DirectoryInfo d = new DirectoryInfo(@textBox10.Text + "\\" + minername + "\\");//Assuming Test is your Folder
-            ////FileInfo[] Files = d.GetFiles("*.*");
+            ////FileInfo[] Files = d.GetFiles("*");
 
 
             ////Directory.CreateDirectory(@textBox10.Text + "\\" + minername + "\\" + minername);
@@ -865,7 +1143,7 @@ namespace HiveOSPacker
             ////}
 
             //DirectoryInfo d1 = new DirectoryInfo(@textBox10.Text + "\\");
-            //FileInfo[] Files1 = d1.GetFiles("*.*");
+            //FileInfo[] Files1 = d1.GetFiles("*");
 
 
             //foreach (FileInfo file1 in Files1)
@@ -894,7 +1172,7 @@ namespace HiveOSPacker
 
 
             DirectoryInfo d2 = new DirectoryInfo(@textBox10.Text + "\\" + minername + "\\");
-            FileInfo[] Files2 = d2.GetFiles("*.*");
+            FileInfo[] Files2 = d2.GetFiles("*");
 
 
 
@@ -1024,7 +1302,7 @@ namespace HiveOSPacker
 
         }
 
-    
+       
         private void button2_Click_1(object sender, EventArgs e)
         {
 
@@ -1332,23 +1610,23 @@ namespace HiveOSPacker
 
             using (WebClient client = new WebClient())
             {
-                client.Credentials = new NetworkCredential("username", "pass");
+                client.Credentials = new NetworkCredential("ftpaccount", "ftppass");
 
-                client.UploadFile("ftpserver" + value1 + "-" + time + ".tar.gz", WebRequestMethods.Ftp.UploadFile, value);
+                client.UploadFile("ftpsite" + value1 + "-" + time + ".tar.gz", WebRequestMethods.Ftp.UploadFile, value);
 
             }
 
-            textBox16.Text= "ftpserver" + value1 + "-" + time+".tar.gz";
+            textBox16.Text= "ftpsite" + value1 + "-" + time+".tar.gz";
             progressBar1.Value = 100;
 
             MessageBox.Show(minername + " miner archive created succesfully at " + textBox13.Text + Environment.NewLine
                 + "Miner Name: " + minername + Environment.NewLine
-                + "Installation URL: " + "ftpserver" + value1 + "-" + time + ".tar.gz" + Environment.NewLine
+                + "Installation URL: " + "ftpsite" + value1 + "-" + time + ".tar.gz" + Environment.NewLine
                 + "Hash Algorithm: " +algo + Environment.NewLine
                 + "Wallet and Worker Template: " + textBox2.Text + Environment.NewLine
                 + "Pool Url: " + textBox1.Text + Environment.NewLine
                 + "Pass: " + textBox15.Text + Environment.NewLine
-                + "Extra Config Arguments: " + textBox9.Text + Environment.NewLine);
+                + "Extra Config Arguments: " + textBox3.Text + Environment.NewLine);
            
 
 
