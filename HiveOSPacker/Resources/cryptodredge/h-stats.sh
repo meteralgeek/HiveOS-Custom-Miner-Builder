@@ -4,7 +4,7 @@
 # MAIN script body
 #######################
 
-. /hive/custom/cryptodredge/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_NAME/h-manifest.conf
 
 
 	threads=`echo "threads" | nc -w $API_TIMEOUT localhost ${WEB_PORT}` #&& echo $threads

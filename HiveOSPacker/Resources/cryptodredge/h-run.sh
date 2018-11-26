@@ -32,5 +32,5 @@ echo -e -n "${GREEN}NVidia${NOCOLOR} driver ${GREEN}${DRV_VERS}${NOCOLOR}-series
 #   ln -fs CryptoDredge_c91 CryptoDredge
 #fi
 
-./CryptoDredge $(< $CUSTOM_CONFIG_FILENAME) --log $CUSTOM_LOG_BASENAME.log -b 127.0.0.1:${WEB_PORT}$@
+./$CUSTOM_NAME $(< $CUSTOM_CONFIG_FILENAME) --log $CUSTOM_LOG_BASENAME.log -b 127.0.0.1:${WEB_PORT}$@
 
