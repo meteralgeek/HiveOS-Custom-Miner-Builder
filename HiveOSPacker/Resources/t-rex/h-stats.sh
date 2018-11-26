@@ -4,7 +4,7 @@ cd `dirname $0`
 #. h-manifest.conf
 #. debug.conf
 #. /hive-config/wallet.conf
-. /hive/custom/$CUSTOM_MINER/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_MINER/h-manifest.conf
 
 #algo_avail=("balloon" "bcd" "bitcore" "c11" "hmq1725" "hsr" "lyra2z" "phi" "polytimos" "renesis" "sha256t" "skunk" "sonoa" "timetravel" "tribus" "x16r" "x16s" "x17" "x22i")
 

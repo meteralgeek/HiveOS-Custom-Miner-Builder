@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export LD_LIBRARY_PATH=/hive/ccminer/cuda
+export LD_LIBRARY_PATH=/hive/miners/ccminer/cuda
 cd `dirname $0`
 
 [ -t 1 ] && . colors

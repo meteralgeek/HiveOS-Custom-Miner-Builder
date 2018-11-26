@@ -6,7 +6,7 @@
 
 [ -t 1 ] && . colors
 
-. /hive/custom/xmrig-nvidia/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_NAME/h-manifest.conf
 
 stats_raw=`curl --connect-timeout 2 --max-time $API_TIMEOUT --silent --noproxy '*' http://127.0.0.1:$WEB_PORT/api.json`
 if [[ $? -ne 0 || -z $stats_raw ]]; then

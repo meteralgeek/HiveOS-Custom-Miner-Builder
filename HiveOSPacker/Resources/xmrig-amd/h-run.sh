@@ -23,5 +23,5 @@ CUSTOM_LOG_BASEDIR=`dirname "$CUSTOM_LOG_BASENAME"`
 #   ln -fs xmrig-amd_282 xmrig-amd
 #fi
 
-./xmrig-amd $(< $CUSTOM_NAME.conf) --api-port=$WEB_PORT$ | tee $CUSTOM_LOG_BASENAME.log
+./$CUSTOM_NAME $(< $CUSTOM_NAME.conf) --api-port=$WEB_PORT$ | tee $CUSTOM_LOG_BASENAME.log
 

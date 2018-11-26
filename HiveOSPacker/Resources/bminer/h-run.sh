@@ -16,4 +16,4 @@ conf=`cat $CUSTOM_CONFIG_FILENAME | grep -v "^$" | grep -v "^#"`
 
 echo $conf
 
-/hive/custom/bminer/bminer `echo $conf` 2>&1 | tee $CUSTOM_LOG_BASENAME.log
+/hive/miners/custom/$CUSTOM_NAME/$CUSTOM_NAME `echo $conf` 2>&1 | tee $CUSTOM_LOG_BASENAME.log

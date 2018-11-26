@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # This code is included in /hive/bin/custom function
 
-. /hive/custom/finminer/h-manifest.conf
-log=/hive/custom/finminer/test.log
+. /hive/miners/custom/$CUSTOM_NAME/h-manifest.conf
+log=/hive/miners/custom/$CUSTOM_NAME/test.log
 
 [[ -z $CUSTOM_TEMPLATE ]] && echo -e "${YELLOW}CUSTOM_TEMPLATE is empty${NOCOLOR}" && return 1
 [[ -z $CUSTOM_CONFIG_FILENAME ]] && echo -e "${RED}No CUSTOM_CONFIG_FILENAME is set${NOCOLOR}" && return 1

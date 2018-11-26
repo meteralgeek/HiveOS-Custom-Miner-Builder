@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. /hive/custom/teamredminer/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_NAME/h-manifest.conf
 
 stats_raw=`echo '{"command":"summary+devs"}' | nc -w $API_TIMEOUT localhost ${WEB_PORT}`
 if [[ $? -ne 0 || -z $stats_raw ]]; then

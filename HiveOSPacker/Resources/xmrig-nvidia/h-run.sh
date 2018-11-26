@@ -14,5 +14,5 @@ cd `dirname $0`
 CUSTOM_LOG_BASEDIR=`dirname "$CUSTOM_LOG_BASENAME"`
 [[ ! -d $CUSTOM_LOG_BASEDIR ]] && mkdir -p $CUSTOM_LOG_BASEDIR
 
-./xmrig-nvidia $(< /hive/custom/$CUSTOM_NAME/$CUSTOM_NAME.conf) -l $CUSTOM_LOG_BASENAME.log --api-port=$WEB_PORT$@
+./$CUSTOM_NAME $(< /hive/miners/custom/$CUSTOM_NAME/$CUSTOM_NAME.conf) -l $CUSTOM_LOG_BASENAME.log --api-port=$WEB_PORT$@
 

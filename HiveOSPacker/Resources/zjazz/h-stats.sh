@@ -47,7 +47,7 @@ get_log_time_diff(){
 # MAIN script body
 #######################
 
-. /hive/custom/$CUSTOM_MINER/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_MINER/h-manifest.conf
 local LOG_NAME="$CUSTOM_LOG_BASENAME.log"
 
 [[ -z $GPU_COUNT_NVIDIA ]] &&

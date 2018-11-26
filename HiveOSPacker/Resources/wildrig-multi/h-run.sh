@@ -19,4 +19,4 @@ for con in `netstat -anp | grep TIME_WAIT | grep ${API_SOCKET} | awk '{print $5}
     killcx $con lo
 done
 
-./changeminername $(< /hive/miners/custom/$CUSTOM_NAME/$CUSTOM_NAME.conf) $@ 2>&1 | tee $CUSTOM_LOG_BASENAME.log
+./$CUSTOM_NAME $(< /hive/miners/custom/$CUSTOM_NAME/$CUSTOM_NAME.conf) $@ 2>&1 | tee $CUSTOM_LOG_BASENAME.log

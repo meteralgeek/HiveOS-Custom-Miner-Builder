@@ -7,7 +7,7 @@
 
 [ -t 1 ] && . colors
 
-. /hive/custom/bminer/h-manifest.conf
+. /hive/miners/custom/$CUSTOM_NAME/h-manifest.conf
 
 
 	#@see https://www.bminer.me/references/
